@@ -1,0 +1,35 @@
+{
+  "name": "steiner-chain",
+  "version": "0.1.0",
+  "description": "Steiner chain generator",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html -p 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jarirepo/steiner-chain.git"
+  },
+  "keywords": [
+    "Steiner chain"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jarirepo/steiner-chain/issues"
+  },
+  "homepage": "https://github.com/jarirepo/steiner-chain#readme",
+  "devDependencies": {
+    "@types/file-saver": "^2.0.1",
+    "@types/stats.js": "^0.17.0",
+    "node-sass": "^4.14.1",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.26.10",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "file-saver": "^2.0.2",
+    "stats.js": "^0.17.0"
+  }
+}
