@@ -59,9 +59,9 @@ export class SteinerChain {
 			};
 		});
 
-		const ref = this.invertedCircles[0];
-		const center = ref.p.clone();		
-		this.invertedCircles.forEach((c, i) => c.p.sub(center));
+		this.invertedCircles
+			.filter((_, i) => i > 0)
+			.forEach((c, i) => c.p.sub(this.invertedCircles[0].p));
 	}
 
 	/** Apply rotation to the Steiner chain circles */
