@@ -90,16 +90,16 @@ export class SteinerChain {
 			ctx.setLineDash([]);
 		}
 
-		ctx.strokeStyle = this.invertedCircles[0].color;
-		ctx.beginPath();
-		ctx.arc(this.invertedCircles[0].p.x, this.invertedCircles[0].p.y, this.invertedCircles[0].r, 0, 2 * Math.PI);
-		ctx.stroke();
+		// ctx.strokeStyle = this.invertedCircles[0].color;
+		// ctx.beginPath();
+		// ctx.arc(this.invertedCircles[0].p.x, this.invertedCircles[0].p.y, this.invertedCircles[0].r, 0, 2 * Math.PI);
+		// ctx.stroke();
 
-		ctx.strokeStyle = this.invertedCircles[1].color;
-		ctx.beginPath();
-		ctx.arc(this.invertedCircles[1].p.x, this.invertedCircles[1].p.y, this.invertedCircles[1].r, 0, 2 * Math.PI);
-		ctx.stroke();
-
+		// ctx.strokeStyle = this.invertedCircles[1].color;
+		// ctx.beginPath();
+		// ctx.arc(this.invertedCircles[1].p.x, this.invertedCircles[1].p.y, this.invertedCircles[1].r, 0, 2 * Math.PI);
+		// ctx.stroke();
+		
 		for (let i = 2; i < this.invertedCircles.length; i++) {
 		// for (const circle of this.invertedCircles) {
 			const circle = this.invertedCircles[i];
@@ -111,19 +111,25 @@ export class SteinerChain {
 
 			// const hue = 360 * circle.r / this.invertedCircles[0].r;
 			const hue = 360 * (i + .5) / (this.n + 2);
-			// const brightness = 100 * circle.r / this.invertedCircles[0].r;
-			const brightness = 50;
+			const brightness = 100 * circle.r / this.invertedCircles[0].r;
+			// const brightness = 50;
 			// ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 			// ctx.fillStyle = `hsl(${hue}, 100%, ${brightness}%)`;
-			ctx.strokeStyle = `hsl(${hue}, 100%, ${brightness}%)`;
+			// ctx.strokeStyle = `hsl(${hue}, 100%, ${brightness}%)`;
 			// ctx.strokeStyle = circle.c;
 			// ctx.strokeStyle = `hsl(${hue}, 100%, ${brightness / 2}%)`;
 			// ctx.lineWidth = 2 / 500;
 
+			const gradient = ctx.createRadialGradient(circle.p.x - circle.r / 3, circle.p.y + circle.r / 3, circle.r * .1, circle.p.x, circle.p.y, circle.r);
+			// gradient.addColorStop(0, '#fff');
+			gradient.addColorStop(0, `rgba(255,255,255,${.5 + brightness / 100})`);
+			gradient.addColorStop(1, `hsl(${hue},100%,${brightness}%)`);
+			ctx.fillStyle = gradient;
+
 			ctx.beginPath();
 			ctx.arc(circle.p.x, circle.p.y, circle.r, 0, 2 * Math.PI);
-			// ctx.fill();
-			ctx.stroke();
+			ctx.fill();
+			// ctx.stroke();
 		}
 
 		// ctx.strokeStyle = '#fff';
