@@ -120,10 +120,14 @@ export class SteinerChain {
 			// ctx.strokeStyle = `hsl(${hue}, 100%, ${brightness / 2}%)`;
 			// ctx.lineWidth = 2 / 500;
 
-			const gradient = ctx.createRadialGradient(circle.p.x - circle.r / 3, circle.p.y + circle.r / 3, circle.r * .1, circle.p.x, circle.p.y, circle.r);
+			const gradient = ctx.createRadialGradient(
+				circle.p.x - circle.r / 3, circle.p.y + circle.r / 3, circle.r * .1,
+				circle.p.x, circle.p.y, circle.r
+			);
 			// gradient.addColorStop(0, '#fff');
 			gradient.addColorStop(0, `rgba(255,255,255,${.5 + brightness / 100})`);
-			gradient.addColorStop(1, `hsl(${hue},100%,${brightness}%)`);
+			gradient.addColorStop(.9, `hsl(${hue},100%,${brightness}%)`);
+			gradient.addColorStop(1, '#000');
 			ctx.fillStyle = gradient;
 
 			ctx.beginPath();
