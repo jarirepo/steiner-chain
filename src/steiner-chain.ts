@@ -17,8 +17,8 @@ export class SteinerChain {
 	angStep = 2 * PI / 10 / 60;
 
 	constructor(public n: number) {
-		this.coi  = { p: new Vector(2, 0), r: this.R, c: 'orange' };	// position will affect the scaling
-		this.circles = [{ p: new Vector(0, 0), r: this.R, c: '#0000ff' }];
+		this.coi  = { p: new Vector(2, 0), r: this.R, color: 'orange' };	// position will affect the scaling
+		this.circles = [{ p: new Vector(0, 0), r: this.R, color: '#0000ff' }];
 		this.generate(n);
 	}
 
@@ -33,10 +33,10 @@ export class SteinerChain {
 		const kr = (1 + s) / (1 - s);	// R / r
 		this.r = this.R / kr;
 		this.rho = this.r * s / (1 - s);	// (R - r) / 2
-		this.circles.push({ p: new Vector(0, 0), r: this.r, c: '#ff0000' });
+		this.circles.push({ p: new Vector(0, 0), r: this.r, color: '#ff0000' });
 		const v = new Vector(this.r + this.rho, 0);
 		for (let i = 0; i < this.n; i++) {
-			this.circles.push({ p: v.clone(), r: this.rho, c: '#00ff33' });
+			this.circles.push({ p: v.clone(), r: this.rho, color: '#00ff33' });
 			v.rotateZ(2 * this.theta);
 		}
 		this.transform();
@@ -45,19 +45,17 @@ export class SteinerChain {
 	/** Transforms the original closed Steiner chain into another one with the same number of circles by usng circle inversion */
 	private transform(): void {
 		this.invertedCircles = this.circles.filter((_, i) => i >= 0).map((c, i) => {
-			const v = c.p.clone().sub(this.coi.p);
-			v.normalize();
+			const r2 = this.coi.r * this.coi.r;
+			const v = c.p.clone().sub(this.coi.p).normalize();
 			const r = v.clone().scale(c.r);
 			const v1 = c.p.clone().sub(r).sub(this.coi.p);
 			const v2 = c.p.clone().add(r).sub(this.coi.p);
-			const d1 = this.coi.r * this.coi.r / v1.mag();
-			const d2 = this.coi.r * this.coi.r / v2.mag();
-			const q1 = this.coi.p.clone().add(v.clone().scale(d1));
-			const q2 = this.coi.p.clone().add(v.clone().scale(d2));
+			const p1 = this.coi.p.clone().add(v.clone().scale(r2 / v1.mag()));
+			const p2 = this.coi.p.clone().add(v.clone().scale(r2 / v2.mag()));
 			return {
-				p: new Vector((q1.x + q2.x) / 2, (q1.y + q2.y) / 2),
-				r: .5 * sqrt(pow(q1.x - q2.x, 2) + pow(q1.y - q2.y, 2)),
-				c: c.c
+				p: new Vector((p1.x + p2.x) / 2, (p1.y + p2.y) / 2),
+				r: .5 * sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)),
+				color: c.color
 			};
 		});
 
@@ -78,13 +76,13 @@ export class SteinerChain {
 	render(ctx: CanvasRenderingContext2D): void {
 		if (false) {
 			for (const circle of this.circles) {
-				ctx.strokeStyle = circle.c;
+				ctx.strokeStyle = circle.color;
 				ctx.beginPath();
 				ctx.arc(circle.p.x, circle.p.y, circle.r, 0, 2 * Math.PI);
 				ctx.stroke();
 			}
 
-			ctx.strokeStyle = this.coi.c;
+			ctx.strokeStyle = this.coi.color;
 			ctx.setLineDash([7 / 50, 2 / 50]);
 			ctx.beginPath();
 			ctx.arc(this.coi.p.x, this.coi.p.y, this.coi.r, 0, 2 * Math.PI);
@@ -92,12 +90,12 @@ export class SteinerChain {
 			ctx.setLineDash([]);
 		}
 
-		ctx.strokeStyle = this.invertedCircles[0].c;
+		ctx.strokeStyle = this.invertedCircles[0].color;
 		ctx.beginPath();
 		ctx.arc(this.invertedCircles[0].p.x, this.invertedCircles[0].p.y, this.invertedCircles[0].r, 0, 2 * Math.PI);
 		ctx.stroke();
 
-		ctx.strokeStyle = this.invertedCircles[1].c;
+		ctx.strokeStyle = this.invertedCircles[1].color;
 		ctx.beginPath();
 		ctx.arc(this.invertedCircles[1].p.x, this.invertedCircles[1].p.y, this.invertedCircles[1].r, 0, 2 * Math.PI);
 		ctx.stroke();
