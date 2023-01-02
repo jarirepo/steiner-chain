@@ -4,7 +4,7 @@ import { SteinerChain } from './steiner-chain';
 import { Mouse } from './mouse';
 import { Vector } from './vector';
 
-const steiner = new SteinerChain( 7 );	// n = 3,4,5,...
+const steiner = new SteinerChain( 5 );	// n = 3,4,5,...
 
 const stats = new Stats();
 stats.showPanel( 0 ); // fps
