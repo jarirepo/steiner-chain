@@ -1,35 +1,30 @@
 {
-  "name": "steiner-chain",
-  "version": "0.1.0",
+  "name": "steiner-chain2",
+  "version": "0.2.0",
   "description": "Steiner chain generator",
-  "main": "src/index.ts",
+  "source": "src/index.html",
   "scripts": {
-    "start": "parcel src/index.html -p 3000",
+    "start": "npx parcel src/index.html -p 3000",
+    "build": "npx parcel build --dist-dir dist --no-optimize --log-level verbose",
+    "build:watch": "npx parcel watch --dist-dir dist  --log-level info",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jarirepo/steiner-chain.git"
-  },
-  "keywords": [
-    "Steiner chain"
-  ],
+  "keywords": [],
   "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jarirepo/steiner-chain/issues"
-  },
-  "homepage": "https://github.com/jarirepo/steiner-chain#readme",
+  "license": "ISC",
   "devDependencies": {
-    "@types/file-saver": "^2.0.1",
-    "@types/stats.js": "^0.17.0",
-    "node-sass": "^4.14.1",
-    "parcel-bundler": "^1.12.4",
-    "sass": "^1.26.10",
-    "typescript": "^3.9.7"
+    "@parcel/transformer-sass": "^2.13.3",
+    "@parcel/transformer-typescript-tsc": "^2.13.3",
+    "@types/file-saver": "^2.0.7",
+    "@types/node": "^18.19.76",
+    "@types/stats.js": "^0.17.3",
+    "events": "^3.3.0",
+    "parcel": "^2.13.3",
+    "sass": "^1.85.0",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
-    "file-saver": "^2.0.2",
+    "file-saver": "^2.0.5",
     "stats.js": "^0.17.0"
   }
 }
